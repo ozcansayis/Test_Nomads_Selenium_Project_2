@@ -8,7 +8,9 @@ import org.openqa.selenium.WebElement;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class TC_20901 extends BaseDriver {
     @Test
@@ -34,17 +36,22 @@ public class TC_20901 extends BaseDriver {
         dRob.keyRelease(KeyEvent.VK_ENTER);
 
         List<WebElement> aCrit3 = driver.findElements(By.cssSelector("div[class='page-title'] h1"));
-        Assert.assertTrue("Orders couldn't be displayed!", !aCrit3.isEmpty() && aCrit3.get(0).getText().equals("My account - Orders"));
+        Assert.assertTrue("Orders couldn't be displayed!", !aCrit3.isEmpty() && aCrit3.getFirst().getText().equals("My account - Orders"));
 
         List<WebElement> aCrit4 = driver.findElements(By.xpath("//input[@type='button'][@value='Details']"));
         Assert.assertFalse("Details button not found!", aCrit4.isEmpty());
 
         dAct.click(driver.findElement(By.cssSelector("input[onclick=\"setLocation('/orderdetails/1640807')\"]"))).build().perform();
 
-        List<WebElement> aCrit5= driver.findElements(By.xpath("//a[text()='PDF Invoice']"));
-        Assert.assertFalse("PDF Invoice button not found!",aCrit5.isEmpty());
+        List<WebElement> aCrit5 = driver.findElements(By.xpath("//a[text()='PDF Invoice']"));
+        Assert.assertFalse("PDF Invoice button not found!", aCrit5.isEmpty());
+
+        WebElement orderNumber = driver.findElement(By.cssSelector("div[class='order-number']"));
+        String orderNumberr = orderNumber.getText().substring(7);
+
 
         dAct.click(driver.findElement(By.linkText("PDF Invoice"))).build().perform();
+        String mainHandle = driver.getWindowHandle();
 
         dRob.keyPress(KeyEvent.VK_CONTROL);//<--Downloads
         dRob.keyPress(KeyEvent.VK_J);
@@ -58,6 +65,19 @@ public class TC_20901 extends BaseDriver {
         dRob.keyPress(KeyEvent.VK_ENTER);
         dRob.keyRelease(KeyEvent.VK_ENTER);
 
+        Set<String> handles = driver.getWindowHandles();
+        String download = null;
+        for (String hndl : handles) {
+            if (!hndl.equals(mainHandle)) {
+                driver.switchTo().window(hndl);
+                if (!driver.getCurrentUrl().contains("chrome://downloads")) {
+                    download = hndl;
+                }
+            }
+        }
+        driver.switchTo().window(download);
+        Assert.assertTrue("error", driver.getCurrentUrl().contains(orderNumberr));
         WaitAndClose();
+
     }
 }
