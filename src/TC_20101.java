@@ -4,9 +4,9 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class TC_0101 extends BaseDriver {
+public class TC_20101 extends BaseDriver {
     @Test
-    public void TC_0101() {
+    public void TC_20101() {
         driver.get("https://demowebshop.tricentis.com/");
         MyFunction.Wait(1);
 

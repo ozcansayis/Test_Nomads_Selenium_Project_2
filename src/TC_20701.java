@@ -8,9 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class TC_0701 extends BaseDriver {
+public class TC_20701 extends BaseDriver {
    @Test
-    public void TC_0701() {
+    public void TC_20701() {
     driver.get("https://demowebshop.tricentis.com/");
         WebElement poll = driver.findElement(By.cssSelector("[class='block block-poll'] div:nth-child(1)"));
         Assert.assertTrue("poll is not displayed", poll.isDisplayed());
