@@ -1,9 +1,9 @@
 import Utility.BaseDriver;
 import org.junit.Test;
 
-public class TC_0801 extends BaseDriver {
+public class TC_20301 extends BaseDriver {
     @Test
-    public void TC_0801() {
+    public void TC_20301() {
 
         WaitAndClose();
     }
