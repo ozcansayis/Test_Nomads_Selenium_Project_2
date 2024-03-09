@@ -8,7 +8,9 @@ import org.openqa.selenium.WebElement;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class TC_20901 extends BaseDriver {
     @Test
@@ -41,8 +43,11 @@ public class TC_20901 extends BaseDriver {
 
         dAct.click(driver.findElement(By.cssSelector("input[onclick=\"setLocation('/orderdetails/1640807')\"]"))).build().perform();
 
-        List<WebElement> aCrit5= driver.findElements(By.xpath("//a[text()='PDF Invoice']"));
-        Assert.assertFalse("PDF Invoice button not found!",aCrit5.isEmpty());
+        List<WebElement> aCrit5 = driver.findElements(By.xpath("//a[text()='PDF Invoice']"));
+        Assert.assertFalse("PDF Invoice button not found!", aCrit5.isEmpty());
+
+        WebElement orderNumber = driver.findElement(By.cssSelector("div[class='order-number']"));
+        String orderNumberStr = orderNumber.getText().substring(7);
 
         dAct.click(driver.findElement(By.linkText("PDF Invoice"))).build().perform();
 
@@ -51,12 +56,20 @@ public class TC_20901 extends BaseDriver {
         dRob.keyRelease(KeyEvent.VK_CONTROL);
         dRob.keyRelease(KeyEvent.VK_J);
         MyFunction.Wait(1);
+        Set<String> handlesBefore = driver.getWindowHandles();
         for (int i = 0; i < 2; i++) {
             dRob.keyPress(KeyEvent.VK_TAB);
             dRob.keyRelease(KeyEvent.VK_TAB);
         }
         dRob.keyPress(KeyEvent.VK_ENTER);
         dRob.keyRelease(KeyEvent.VK_ENTER);
+        MyFunction.Wait(1);
+        Set<String> handlesAfter = driver.getWindowHandles();
+        handlesAfter.removeAll(handlesBefore);
+        Iterator<String> orderTabHandle = handlesAfter.iterator();
+        String handle = orderTabHandle.next();
+        driver.switchTo().window(handle);
+        Assert.assertTrue("Failed to download the requested invoice!", driver.getCurrentUrl().contains(orderNumberStr));
 
         WaitAndClose();
     }
