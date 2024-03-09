@@ -1,5 +1,6 @@
 import Utility.BaseDriver;
 import Utility.MyFunction;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,7 @@ public class TC_20101 extends BaseDriver {
         MyFunction.Wait(1);
 
         WebElement email = driver.findElement(By.id("Email"));
-        dAct.click(email).sendKeys("testnomads10@gmail.com").build().perform();
+        dAct.click(email).sendKeys("testnomads11@gmail.com").build().perform();
         MyFunction.Wait(1);
 
         WebElement password= driver.findElement(By.xpath("//input[@id='Password']"));
@@ -42,9 +43,8 @@ public class TC_20101 extends BaseDriver {
         WebElement registerButton=driver.findElement(By.id("register-button"));
         dAct.moveToElement(registerButton).click().build().perform();
 
-
-
-        //Your registration completed
+        WebElement completed= driver.findElement(By.cssSelector("div[class='page registration-result-page'] div[class='result']"));
+        Assert.assertEquals("helper text does not appear","Your registration completed",completed.getText());
 
 
         WaitAndClose();

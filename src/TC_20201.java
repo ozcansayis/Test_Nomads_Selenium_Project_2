@@ -1,5 +1,6 @@
 import Utility.BaseDriver;
 import Utility.MyFunction;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,34 +11,41 @@ public class TC_20201 extends BaseDriver {
     public void TC_20201() {
 
         driver.get("https://demowebshop.tricentis.com/");
-        Actions demowe = new Actions(driver);
-
-        WebElement login= driver.findElement(By.cssSelector("[class='ico-login']"));
-        demowe.moveToElement(login).click().build().perform();
         MyFunction.Wait(1);
 
-        WebElement email= driver.findElement(By.id("Email"));
-        demowe.moveToElement(email)
-                .click()
-                .sendKeys("testnomads06@gmail.com")
-                .build()
-                .perform();
+        WebElement register = driver.findElement(By.xpath("//a[text()='Register']"));
+        dAct.moveToElement(register).click().build().perform();
         MyFunction.Wait(1);
 
-        WebElement password= driver.findElement(By.name("Password"));
-        demowe.moveToElement(password)
-                .click()
-                .sendKeys("07Nomad++")
-                .build()
-                .perform();
-
-        WebElement loginButton=driver.findElement(By.cssSelector("input[value='Log in']"));
-        demowe.moveToElement(loginButton).click().build().perform();
+        WebElement gender = driver.findElement(By.name("Gender"));
+        dAct.moveToElement(gender).click().build().perform();
         MyFunction.Wait(1);
 
-        WebElement logOut= driver.findElement(By.xpath("//a[@class='ico-logout']"));
-        demowe.moveToElement(logOut).click().build().perform();
+        WebElement firstName = driver.findElement(By.id("FirstName"));
+        dAct.click(firstName).sendKeys("Test").build().perform();
         MyFunction.Wait(1);
+
+        WebElement lastName = driver.findElement(By.cssSelector("input[id='LastName']"));
+        dAct.click(lastName).sendKeys("Nomads").build().perform();
+        MyFunction.Wait(1);
+
+        WebElement email = driver.findElement(By.id("Email"));
+        dAct.click(email).sendKeys("testnomads10@gmail.com").build().perform();
+        MyFunction.Wait(1);
+
+        WebElement password= driver.findElement(By.xpath("//input[@id='Password']"));
+        dAct.click(password).sendKeys("07Nomad++").build().perform();
+        MyFunction.Wait(1);
+
+        WebElement confirmPassword= driver.findElement(By.xpath("//input[@id='ConfirmPassword']"));
+        dAct.click(confirmPassword).sendKeys("07Nomad++").build().perform();
+        MyFunction.Wait(1);
+
+        WebElement registerButton=driver.findElement(By.name("register-button"));
+        dAct.click(registerButton).click().build().perform();
+
+        WebElement alert= driver.findElement(By.cssSelector("[class='validation-summary-errors']"));
+        Assert.assertTrue("Helper text does not appear.", alert.getText().equals("The specified email already exists"));
 
 
         WaitAndClose();
