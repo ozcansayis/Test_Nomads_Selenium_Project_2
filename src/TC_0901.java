@@ -10,9 +10,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-public class TC_0901 extends BaseDriver {
+public class TC_20901 extends BaseDriver {
     @Test
-    public void TC_0901() throws AWTException {
+    public void TC_20901() throws AWTException {
         driver.get("https://demowebshop.tricentis.com/");
         Robot dRob = new Robot();
         // credentials will be updated!!!!!!!!!!!!!
