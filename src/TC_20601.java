@@ -1,5 +1,4 @@
 import Utility.BaseDriver;
-import Utility.MyFunction;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
