@@ -55,10 +55,10 @@ public class TC_20601 extends BaseDriver {
         }
 
         dAct.click(driver.findElement(By.cssSelector("input[onclick='Shipping.togglePickUpInStore(this)']"))).build().perform();
-        dAct.click(driver.findElement(By.xpath("//input[@onclick='Shipping.save()']"))).build().perform();
+        dAct.click(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@onclick='Shipping.save()']"))))).build().perform();
 
-        dAct.moveToElement(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@id='paymentmethod_2']"))))).click().build().perform();
-        dAct.click(driver.findElement(By.cssSelector("input[onclick='PaymentMethod.save()']"))).build().perform();
+        dAct.moveToElement(wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("input[id='paymentmethod_2']"))))).click().build().perform();
+        dAct.moveToElement(wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("input[onclick='PaymentMethod.save()']"))))).click().build().perform();
 
         dAct.click(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@name='CardholderName']"))))).click().sendKeys("Test Nomads").build().perform();
         dAct.click(driver.findElement(By.cssSelector("input[id='CardNumber']"))).click().sendKeys("4242 4242 4242 4242").build().perform();
@@ -67,7 +67,7 @@ public class TC_20601 extends BaseDriver {
         Select dateY = new Select(driver.findElement(By.id("ExpireYear")));
         dateY.selectByValue("2032");
         dAct.click(driver.findElement(By.xpath("//input[@name='CardCode']"))).sendKeys("123").build().perform();
-        dAct.click(driver.findElement(By.xpath("//input[@onclick='PaymentInfo.save()']"))).build().perform();
+        dAct.click(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@onclick='PaymentInfo.save()']"))))).build().perform();
 
         dAct.scrollToElement(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@onclick='ConfirmOrder.save()']"))))).build().perform();
 
@@ -82,5 +82,6 @@ public class TC_20601 extends BaseDriver {
             System.out.println("The total price of the product is not equal to the calculated sum.");
         }
         WaitAndClose();
+
     }
 }
