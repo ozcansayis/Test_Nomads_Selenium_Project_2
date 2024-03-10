@@ -39,7 +39,7 @@ public class TC_20601 extends BaseDriver {
         dAct.moveToElement(driver.findElement(By.xpath("//button[@class='button-1 checkout-button']"))).click().build().perform();
 
         List<WebElement> addInformation = driver.findElements(By.cssSelector("label[for='billing-address-select']"));
-        if (addInformation.size() > 0) {
+        if (!addInformation.isEmpty()) {
             dAct.click(driver.findElement(By.cssSelector("input[onclick='Billing.save()']"))).build().perform();
         } else {
             WebElement country2 = driver.findElement(By.cssSelector("select[id='BillingNewAddress_CountryId']"));
