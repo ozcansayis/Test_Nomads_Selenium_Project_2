@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
@@ -15,27 +14,24 @@ public class TC_20601 extends BaseDriver {
     public void TC_20601() {
         driver.get("https://demowebshop.tricentis.com/");
 
-        WebElement loginButton = driver.findElement(By.xpath("//a[text()='Log in']"));
-        dAct.moveToElement(loginButton).click().build().perform();
+        dAct.moveToElement(driver.findElement(By.xpath("//a[text()='Log in']"))).click().build().perform();
 
-        dAct.moveToElement(driver.findElement(By.cssSelector("input[id='Email']"))).click().sendKeys("testnomads007@gmail.com").build().perform();
+        dAct.moveToElement(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("input[id='Email']"))))).click().sendKeys("testnomads007@gmail.com").build().perform();
         dAct.moveToElement(driver.findElement(By.xpath("//input[@name='Password']"))).click().sendKeys("07Nomad++").build().perform();
         dAct.moveToElement(driver.findElement(By.cssSelector("input[value='Log in']"))).click().build().perform();
-        MyFunction.Wait(2);
 
-        dAct.moveToElement(driver.findElement(By.xpath("//ul[@class='top-menu']/li[2]"))).build().perform();
+        dAct.moveToElement(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//ul[@class='top-menu']/li[2]"))))).build().perform();
         dAct.moveToElement(driver.findElement(By.cssSelector("[class='sublist firstLevel active']>:nth-child(2)"))).click().build().perform();
-        MyFunction.Wait(1);
 
-        dAct.scrollToElement(driver.findElement(By.xpath("//input[@value='Add to cart']"))).build().perform();
+        dAct.scrollToElement(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//div[@class='footer']"))))).build().perform();
 
         dAct.moveToElement(driver.findElement(By.cssSelector("div[class='product-item']>div>a>img"))).click().build().perform();
 
-        dAct.click(driver.findElement(By.cssSelector("input[class='button-1 add-to-cart-button']"))).build().perform();
+        dAct.click(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("input[class='button-1 add-to-cart-button']"))))).build().perform();
 
         dAct.moveToElement(driver.findElement(By.xpath("//span[text()='Shopping cart']"))).click().build().perform();
 
-        WebElement country = driver.findElement(By.cssSelector("select[name='CountryId']"));
+        WebElement country = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("select[name='CountryId']"))));
         Select countrySel = new Select(country);
         countrySel.selectByValue("77");
         dAct.moveToElement(driver.findElement(By.xpath("//select[@id='StateProvinceId']"))).click().build().perform();
@@ -61,10 +57,10 @@ public class TC_20601 extends BaseDriver {
         dAct.click(driver.findElement(By.cssSelector("input[onclick='Shipping.togglePickUpInStore(this)']"))).build().perform();
         dAct.click(driver.findElement(By.xpath("//input[@onclick='Shipping.save()']"))).build().perform();
 
-        dAct.moveToElement(wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//input[@id='paymentmethod_2']"))))).click().build().perform();
+        dAct.moveToElement(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@id='paymentmethod_2']"))))).click().build().perform();
         dAct.click(driver.findElement(By.cssSelector("input[onclick='PaymentMethod.save()']"))).build().perform();
 
-        dAct.click(driver.findElement(By.xpath("//input[@name='CardholderName']"))).click().sendKeys("Test Nomads").build().perform();
+        dAct.click(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@name='CardholderName']"))))).click().sendKeys("Test Nomads").build().perform();
         dAct.click(driver.findElement(By.cssSelector("input[id='CardNumber']"))).click().sendKeys("4242 4242 4242 4242").build().perform();
         Select dateM = new Select(driver.findElement(By.id("ExpireMonth")));
         dateM.selectByValue("1");
