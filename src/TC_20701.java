@@ -9,18 +9,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
 
 public class TC_20701 extends BaseDriver {
-   @Test
+    @Test
     public void TC_20701() {
-    driver.get("https://demowebshop.tricentis.com/");
+        driver.get("https://demowebshop.tricentis.com/");
         WebElement poll = driver.findElement(By.cssSelector("[class='block block-poll'] div:nth-child(1)"));
-        Assert.assertTrue("poll is not displayed", poll.isDisplayed());
+        Assert.assertTrue("Poll is not displayed", poll.isDisplayed());
 
-
+        //Storing all buttons into a list to make sure they function right.
         List<WebElement> pollOpt = driver.findElements(By.cssSelector("[id^='pollanswers']"));
         for (WebElement x : pollOpt) {
 
             dAct.click(x).build().perform();
-            Assert.assertTrue(x.getAccessibleName() + " is not clikable", x.isSelected());
+            Assert.assertTrue(" Buttons are not clikable", x.isSelected());
         }
 
         WebElement voteButton = driver.findElement(By.xpath("//*[@id='vote-poll-1']"));
@@ -46,7 +46,7 @@ public class TC_20701 extends BaseDriver {
         List<WebElement> voteButtons = driver.findElements(By.cssSelector("[id^='pollanswers']"));
         if (!votes.isEmpty()) {
             for (WebElement element : votes) {
-                Assert.assertTrue("error", element.getText().contains("vote(s)"));
+                Assert.assertTrue("Votes are not visible", element.getText().contains("vote(s)"));
             }
         } else if (!voteButtons.isEmpty()) {
             dAct.click(voteButtons.get(2)).build().perform();
@@ -56,7 +56,7 @@ public class TC_20701 extends BaseDriver {
             MyFunction.Wait(2);
             List<WebElement> votes2 = driver.findElements(By.cssSelector("ul[class='poll-results'] .answer"));
             for (WebElement element2 : votes2) {
-                Assert.assertTrue("error", element2.getText().contains("vote(s)"));
+                Assert.assertTrue("Votes are not visible.", element2.getText().contains("vote(s)"));
             }
         }
         WaitAndClose();
