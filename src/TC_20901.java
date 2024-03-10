@@ -17,16 +17,16 @@ public class TC_20901 extends BaseDriver {
     public void TC_20901() throws AWTException {
         driver.get("https://demowebshop.tricentis.com/");
         Robot dRob = new Robot();
-        // credentials will be updated!!!!!!!!!!!!!
-        dAct.moveToElement(driver.findElement(By.linkText("Log in"))).click().build().perform();
-        dAct.click(driver.findElement(By.cssSelector("input[id='Email']"))).sendKeys("ozcansayis@gmail.com" + Keys.TAB + "369258+" + Keys.ENTER).build().perform();
 
-        List<WebElement> aCrit1 = driver.findElements(By.linkText("Log out"));
-        Assert.assertFalse("Login failed!", aCrit1.isEmpty());
+        dAct.moveToElement(driver.findElement(By.linkText("Log in"))).click().perform();
+        dAct.click(driver.findElement(By.cssSelector("input[id='Email']"))).sendKeys("testnomads01@gmail.com" + Keys.TAB + "07Nomad++" + Keys.ENTER).perform();
 
-        dAct.click(driver.findElement(By.cssSelector(".account"))).build().perform();
-        WebElement aCrit2 = driver.findElement(By.xpath("//div[@class='page-title']/h1"));
-        Assert.assertTrue("Account information couldn't be displayed!", aCrit2.getText().contains("Customer info"));
+        WebElement logoutLink = driver.findElement(By.linkText("Log out"));
+        Assert.assertNotNull("Login failed!", logoutLink);
+
+        dAct.click(driver.findElement(By.cssSelector(".account"))).perform();
+        WebElement accountInfo = driver.findElement(By.xpath("//div[@class='page-title']/h1"));
+        Assert.assertTrue("Account information couldn't be displayed!", accountInfo.getText().contains("Customer info"));
 
         for (int i = 0; i < 17; i++) {// <--"Order" button.
             dRob.keyPress(KeyEvent.VK_TAB);
@@ -35,21 +35,20 @@ public class TC_20901 extends BaseDriver {
         dRob.keyPress(KeyEvent.VK_ENTER);
         dRob.keyRelease(KeyEvent.VK_ENTER);
 
-        List<WebElement> aCrit3 = driver.findElements(By.cssSelector("div[class='page-title'] h1"));
-        Assert.assertTrue("Orders couldn't be displayed!", !aCrit3.isEmpty() && aCrit3.get(0).getText().equals("My account - Orders"));
+        WebElement ordersTitle = driver.findElement(By.cssSelector("div[class='page-title'] h1"));
+        Assert.assertEquals("Orders couldn't be displayed!", "My account - Orders", ordersTitle.getText());
 
-        List<WebElement> aCrit4 = driver.findElements(By.xpath("//input[@type='button'][@value='Details']"));
-        Assert.assertFalse("Details button not found!", aCrit4.isEmpty());
+        List<WebElement> detailButtons = driver.findElements(By.xpath("//input[@type='button'][@value='Details']"));
+        Assert.assertFalse("Details button not found!", detailButtons.isEmpty());
+        dAct.click(detailButtons.get(0)).perform();
 
-        dAct.click(driver.findElement(By.cssSelector("input[onclick=\"setLocation('/orderdetails/1640807')\"]"))).build().perform();
+        WebElement pdfInvoiceButton = driver.findElement(By.xpath("//a[text()='PDF Invoice']"));
+        Assert.assertNotNull("PDF Invoice button not found!", pdfInvoiceButton);
 
-        List<WebElement> aCrit5 = driver.findElements(By.xpath("//a[text()='PDF Invoice']"));
-        Assert.assertFalse("PDF Invoice button not found!", aCrit5.isEmpty());
+        WebElement orderNumber = driver.findElement(By.cssSelector("div[class='order-number'] strong"));
+        String orderNumberStr = orderNumber.getText().replaceAll("[^0-9]","");
 
-        WebElement orderNumber = driver.findElement(By.cssSelector("div[class='order-number']"));
-        String orderNumberStr = orderNumber.getText().substring(7);
-
-        dAct.click(driver.findElement(By.linkText("PDF Invoice"))).build().perform();
+        dAct.click(pdfInvoiceButton).build().perform();
 
         dRob.keyPress(KeyEvent.VK_CONTROL);//<--Downloads
         dRob.keyPress(KeyEvent.VK_J);
