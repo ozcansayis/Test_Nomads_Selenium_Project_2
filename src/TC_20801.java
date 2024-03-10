@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
@@ -12,25 +11,21 @@ import java.util.List;
 public class TC_20801 extends BaseDriver {
     @Test
     public void TC_20801() {
-
         driver.get("https://demowebshop.tricentis.com");
 
         WebElement loginLink = driver.findElement(By.className("ico-login"));
         dAct.click(loginLink).perform();
 
-        dAct.sendKeys(driver.findElement(By.id("Email")), "ozcansayis@gmail.com");
-
-        dAct.sendKeys(driver.findElement(By.id("Password")), "369258+");
-
+        dAct.sendKeys(driver.findElement(By.id("Email")), "testnomads01@gmail.com");
+        dAct.sendKeys(driver.findElement(By.id("Password")), "07Nomad++");
         WebElement loginButton = driver.findElement(By.cssSelector("input[value = 'Log in']"));
         dAct.click(loginButton).perform();
 
-        Actions actions = new Actions(driver);
         WebElement computersMenu = driver.findElement(By.linkText("Computers"));
-        actions.moveToElement(computersMenu).click().perform();
+        dAct.moveToElement(computersMenu).click().perform();
 
         WebElement notebooksSubMenu = driver.findElement(By.linkText("Notebooks"));
-        actions.moveToElement(notebooksSubMenu).click().perform();
+        dAct.moveToElement(notebooksSubMenu).click().perform();
         WebElement laptop = driver.findElement(By.linkText("14.1-inch Laptop"));
         dAct.click(laptop).perform();
 
@@ -44,7 +39,7 @@ public class TC_20801 extends BaseDriver {
 
         WebElement couponMessage = driver.findElement(By.xpath("//div[@class='message']"));
         if (couponMessage.getText().contains("The coupon code you entered couldn't be applied to your order")) {
-            System.out.println("Uyarı: Kupon Kullanılamadı");
+            System.out.println("UYARI: Kupon Kullanılamadı");
         }
 
         WebElement addGiftCardButton = driver.findElement(By.name("applygiftcardcouponcode"));
@@ -57,10 +52,10 @@ public class TC_20801 extends BaseDriver {
         }
 
         WebElement countryDropdown = driver.findElement(By.id("CountryId"));
-        dAct.sendKeys(driver.findElement(By.id("CountryId")), "United States");
+        dAct.sendKeys(countryDropdown, "United States");
 
         WebElement stateDropdown = driver.findElement(By.id("StateProvinceId"));
-        dAct.sendKeys(driver.findElement(By.id("StateProvinceId")), "California");
+        dAct.sendKeys(stateDropdown, "California");
         WebElement termsCheckbox = driver.findElement(By.id("termsofservice"));
         dAct.click(termsCheckbox).perform();
 
@@ -69,9 +64,8 @@ public class TC_20801 extends BaseDriver {
 
         List<WebElement> elements = driver.findElements(By.cssSelector("label[for='billing-address-select']"));
         if (elements.isEmpty()) {
-
             WebElement firstName = driver.findElement(By.id("BillingNewAddress_FirstName"));
-            dAct.sendKeys(firstName, "fatos");
+            dAct.sendKeys(firstName, "Fatos");
 
             WebElement lastName = driver.findElement(By.id("BillingNewAddress_LastName"));
             dAct.sendKeys(lastName, "YILDIZ");
@@ -81,7 +75,6 @@ public class TC_20801 extends BaseDriver {
 
             WebElement countryDropdownSelect = driver.findElement(By.id("BillingNewAddress_CountryId"));
             dAct.sendKeys(countryDropdownSelect, "United States");
-
 
             WebElement stateDropdownSelect = driver.findElement(By.id("BillingNewAddress_StateProvinceId"));
             dAct.sendKeys(stateDropdownSelect, "California");
@@ -117,23 +110,14 @@ public class TC_20801 extends BaseDriver {
         WebElement continueButton6 = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("input[onclick='PaymentInfo.save()']"))));
         dAct.click(continueButton6).perform();
 
-
         WebElement continueButton7 = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("input[onclick='ConfirmOrder.save()']"))));
         dAct.click(continueButton7).perform();
         MyFunction.Wait(2);
 
         WebElement mesaj = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector("[class='title']>strong"))));
         System.out.println(mesaj.getText());
-        Assert.assertTrue("Mesaj bulunamadı", mesaj.getText().equals("Your order has been successfully processed!"));
+        Assert.assertEquals("Mesaj bulunamadı", "Your order has been successfully processed!", mesaj.getText());
 
-       WaitAndClose();
+        WaitAndClose();
     }
-
 }
-
-
-
-
-
-
-

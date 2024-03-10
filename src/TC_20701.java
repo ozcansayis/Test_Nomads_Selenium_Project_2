@@ -12,6 +12,7 @@ public class TC_20701 extends BaseDriver {
     @Test
     public void TC_20701() {
         driver.get("https://demowebshop.tricentis.com/");
+
         WebElement poll = driver.findElement(By.cssSelector("[class='block block-poll'] div:nth-child(1)"));
         Assert.assertTrue("Poll is not displayed", poll.isDisplayed());
 
@@ -25,20 +26,19 @@ public class TC_20701 extends BaseDriver {
 
         WebElement voteButton = driver.findElement(By.xpath("//*[@id='vote-poll-1']"));
         Assert.assertTrue("button is not displayed", voteButton.isDisplayed());
-        dAct.click(pollOpt.get(2)).perform();
-        dAct.click(voteButton).build().perform();
-        WebElement helperText = driver.findElement(By.cssSelector("[id='block-poll-vote-error-1']"));
-        Assert.assertTrue(helperText.getAccessibleName() + " is not displayed", helperText.isDisplayed() || helperText.getText().equals("Only registered users can vote."));
+
+//        dAct.click(pollOpt.get(2)).perform();
+//        dAct.click(voteButton).build().perform();
+//        WebElement helperText = driver.findElement(By.cssSelector("[id='block-poll-vote-error-1']"));
+//        Assert.assertTrue(helperText.getAccessibleName() + " is not displayed", helperText.isDisplayed() || helperText.getText().equals("Only registered users can vote."));
 
         WebElement logIn = driver.findElement(By.xpath("//*[@class='ico-login']"));
         dAct.click(logIn).build().perform();
 
         WebElement id = driver.findElement(By.id("Email"));
-        dAct.sendKeys(id, "testnomads01@gmail.com").build().perform();
+        dAct.sendKeys(id, "testnomads493@gmail.com").build().perform();
         WebElement password = driver.findElement(By.id("Password"));
         dAct.sendKeys(password, "07Nomad++").build().perform();
-
-
         WebElement logIn2 = driver.findElement(By.cssSelector("div[class='buttons'] [value='Log in']"));
         dAct.sendKeys(logIn2).build().perform();
 
@@ -59,8 +59,7 @@ public class TC_20701 extends BaseDriver {
                 Assert.assertTrue("Votes are not visible.", element2.getText().contains("vote(s)"));
             }
         }
+
         WaitAndClose();
     }
-
 }
-

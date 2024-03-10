@@ -1,4 +1,5 @@
 import Utility.BaseDriver;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -23,7 +24,10 @@ public class TC_20301 extends BaseDriver {
 
         WebElement logOut = driver.findElement(By.xpath("//a[@class='ico-logout']"));
         dAct.moveToElement(logOut).click().build().perform();
-        // bu kısma assert eklenecek
+
+        WebElement acLogin = driver.findElement(By.linkText("Log in"));
+        Assert.assertNotNull("User is not directed to the login page!", acLogin);
+
         WaitAndClose();
     }
 }
