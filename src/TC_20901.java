@@ -46,7 +46,7 @@ public class TC_20901 extends BaseDriver {
         Assert.assertNotNull("PDF Invoice button not found!", pdfInvoiceButton);
 
         WebElement orderNumber = driver.findElement(By.cssSelector("div[class='order-number'] strong"));
-        String orderNumberStr = orderNumber.getText().replaceAll("[^0-9]","");
+        String orderNumberStr = orderNumber.getText().replaceAll("[^0-9]", "");
 
         dAct.click(pdfInvoiceButton).build().perform();
 

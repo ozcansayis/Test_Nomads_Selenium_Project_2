@@ -11,20 +11,20 @@ public class TC_20401 extends BaseDriver {
     public void TC_20401() {
         driver.get("https://demowebshop.tricentis.com/");
 
-        WebElement login= driver.findElement(By.xpath("//a[text()='Log in']"));
+        WebElement login = driver.findElement(By.xpath("//a[text()='Log in']"));
         dAct.moveToElement(login).click().build().perform();
 
-        WebElement email=driver.findElement(By.cssSelector("input[id='Email']"));
+        WebElement email = driver.findElement(By.cssSelector("input[id='Email']"));
         dAct.moveToElement(email).click().sendKeys("testnomads01@gmail.com").build().perform();
 
-        WebElement password=driver.findElement(By.xpath("//input[@id='Password']"));
+        WebElement password = driver.findElement(By.xpath("//input[@id='Password']"));
         dAct.moveToElement(password).click().sendKeys("07Nomad++").build().perform();
 
-        WebElement login2=driver.findElement(By.cssSelector("input[value='Log in']"));
+        WebElement login2 = driver.findElement(By.cssSelector("input[value='Log in']"));
         dAct.moveToElement(login2).click().build().perform();
 
-        List<WebElement> logoutButton=driver.findElements(By.xpath("//a[text()='Log out']"));
-        Assert.assertFalse("Test Failed!",logoutButton.isEmpty());
+        List<WebElement> logoutButton = driver.findElements(By.xpath("//a[text()='Log out']"));
+        Assert.assertFalse("Login failed!", logoutButton.isEmpty());
 
         WaitAndClose();
     }
