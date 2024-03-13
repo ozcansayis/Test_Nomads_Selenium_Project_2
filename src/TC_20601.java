@@ -1,5 +1,4 @@
 import Utility.BaseDriver;
-import Utility.MyFunction;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -50,10 +49,12 @@ public class TC_20601 extends BaseDriver {
 
         dAct.click(driver.findElement(By.cssSelector("input[onclick='Shipping.togglePickUpInStore(this)']"))).build().perform();
         dAct.click(driver.findElement(By.xpath("//input[@onclick='Shipping.save()']"))).build().perform();
-        MyFunction.Wait(3);
 
-        dAct.moveToElement(driver.findElement(By.cssSelector("input[id='paymentmethod_2']"))).click().build().perform();
-        dAct.moveToElement(driver.findElement(By.cssSelector("input[onclick='PaymentMethod.save()']"))).click().build().perform();
+        while (!driver.findElement(By.cssSelector("input[id='paymentmethod_2']")).isSelected()) {
+            dAct.click(driver.findElement(By.cssSelector("input[id='paymentmethod_2']"))).build().perform();
+        }
+
+        dAct.click(driver.findElement(By.cssSelector("input[onclick='PaymentMethod.save()']"))).build().perform();
         dAct.click(driver.findElement(By.xpath("//input[@name='CardholderName']"))).sendKeys("Test Nomads").build().perform();
         dAct.click(driver.findElement(By.cssSelector("input[id='CardNumber']"))).sendKeys("4242 4242 4242 4242").build().perform();
 
